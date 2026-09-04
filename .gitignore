@@ -24,3 +24,6 @@ terraform.tfplan.*
 # Si vous utilisez des outils de débogage comme .DS_Store ou thumbs.db
 .DS_Store
 Thumbs.db
+
+# Clés privées SSH
+*.pem

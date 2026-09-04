@@ -9,8 +9,8 @@ data "aws_ami" "ubuntu" {
 }
 
 locals {
-  ami_id        = data.aws_ami.ubuntu.id
-  filename      = "./keypair/${var.stack}.pem"
+  ami_id   = data.aws_ami.ubuntu.id
+  filename = "./keypair/${var.stack}.pem"
   # filename      =  "/var/jenkins_home/workspace/ic-webapp/${var.stack}.pem"
   # filename      =  "/var/jenkins_home/workspace/ic-webapp/docker.pem"
   instance_name = var.stack
@@ -27,7 +27,7 @@ module "security_groups" {
   security_groups_name  = var.security_groups_name
   security_groups_ports = var.security_groups_ports
   protocol              = var.protocol
-  depends_on = [ module.keypair ]
+  depends_on            = [module.keypair]
 }
 
 module "ec2_docker" {
@@ -40,7 +40,7 @@ module "ec2_docker" {
   instance_name        = local.instance_name
   instance_type        = var.instance_type
   count                = var.stack == "docker" ? 1 : 0
-  depends_on = [ module.keypair ]
+  depends_on           = [module.keypair]
 }
 module "ec2_kubernetes" {
   source               = "./modules/kubernetes"
@@ -52,5 +52,5 @@ module "ec2_kubernetes" {
   instance_name        = local.instance_name
   instance_type        = var.instance_type
   count                = var.stack == "kubernetes" ? 1 : 0
-  depends_on = [ module.keypair ]
+  depends_on           = [module.keypair]
 }
